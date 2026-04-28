@@ -1,0 +1,264 @@
+/* calculator styles */
+/* i made this myself */
+
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Nunito:wght@400;700;900&display=swap');
+
+:root {
+    --bg: #0f0f1a;
+    --panel: #1a1a2e;
+    --card: #16213e;
+    --accent: #e94560;
+    --accent2: #0f3460;
+    --text: #eaeaea;
+    --muted: #888;
+    --green: #00d68f;
+    --border: #2a2a4a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    min-height: 100vh;
+}
+
+.page-wrapper {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 2.2rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: var(--accent);
+}
+
+.header p {
+    color: var(--muted);
+    margin-top: 5px;
+}
+
+.main-area {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* CALCULATOR BOX */
+.calc-box {
+    flex: 1;
+    min-width: 280px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.display {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 2rem;
+    text-align: right;
+    color: var(--green);
+    margin-bottom: 20px;
+    word-break: break-all;
+    min-height: 70px;
+}
+
+.input-row {
+    margin-bottom: 14px;
+}
+
+.input-row input {
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 1rem;
+    font-family: 'Share Tech Mono', monospace;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.input-row input:focus {
+    border-color: var(--accent);
+}
+
+.input-row input::placeholder {
+    color: var(--muted);
+}
+
+/* remove default number arrows */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
+.operator-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.op-btn {
+    flex: 1;
+    padding: 12px 0;
+    background: var(--accent2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.op-btn:hover {
+    background: var(--accent);
+    transform: scale(1.05);
+}
+
+.op-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.selected-op {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-bottom: 14px;
+}
+
+.calc-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    margin-bottom: 10px;
+    transition: opacity 0.2s, transform 0.1s;
+}
+
+.calc-btn:hover {
+    opacity: 0.85;
+    transform: scale(1.02);
+}
+
+.clear-btn {
+    width: 100%;
+    padding: 10px;
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.clear-btn:hover {
+    color: var(--text);
+    border-color: var(--text);
+}
+
+#error-msg {
+    color: var(--accent);
+    text-align: center;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    min-height: 20px;
+}
+
+/* HISTORY BOX */
+.history-box {
+    flex: 1;
+    min-width: 240px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    max-height: 480px;
+    display: flex;
+    flex-direction: column;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.history-header h3 {
+    font-size: 1.1rem;
+    color: var(--text);
+}
+
+.clear-history-btn {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.clear-history-btn:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+#history-list {
+    overflow-y: auto;
+    flex: 1;
+}
+
+.no-history {
+    color: var(--muted);
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.history-item {
+    background: var(--panel);
+    border-left: 3px solid var(--accent);
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--text);
+}
+
+.history-item span {
+    color: var(--green);
+    font-weight: bold;
+}

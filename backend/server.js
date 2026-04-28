@@ -1,14 +1,16 @@
 // simple backend server for calculator
-// i made this using node and express
+// fixed version for deployment (Render compatible)
 
 const express = require('express');
-const app = express();
-const port = 3000;
+const path = require('path');
 
-// this is needed to read json from frontend
+const app = express();
+
+const port = process.env.PORT || 3000;
+
+// middleware to read JSON
 app.use(express.json());
 
-// allow frontend to talk to backend (cors)
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -16,10 +18,13 @@ app.use(function(req, res, next) {
     next();
 });
 
-// serve frontend files
-app.use(express.static('../frontend'));
+app.use(express.static(path.join(__dirname, 'frontend')));
 
-// this route does the calculation
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
+});
+
+// calculator logic
 app.post('/calculate', function(req, res) {
 
     var num1 = parseFloat(req.body.num1);
@@ -29,7 +34,6 @@ app.post('/calculate', function(req, res) {
     var result = 0;
     var error  = "";
 
-    // same if-else like in C
     if (op == '+') {
         result = num1 + num2;
     }
@@ -57,14 +61,12 @@ app.post('/calculate', function(req, res) {
     }
 });
 
-// history stored in array (like C array)
+// history storage
 var history = [];
-var history_count = 0;
 
 app.post('/save-history', function(req, res) {
     var entry = req.body.entry;
-    history[history_count] = entry;
-    history_count = history_count + 1;
+    history.push(entry);
     res.json({ success: true });
 });
 
@@ -74,10 +76,10 @@ app.get('/get-history', function(req, res) {
 
 app.delete('/clear-history', function(req, res) {
     history = [];
-    history_count = 0;
     res.json({ success: true });
 });
 
+// start server
 app.listen(port, function() {
-    console.log('Calculator server running at http://localhost:' + port);
+    console.log('Server running on port ' + port);
 });
